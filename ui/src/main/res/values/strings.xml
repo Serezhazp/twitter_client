@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">TwitterClient</string>
+    <string name="title_activity_login">Sign in</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <!-- Login screen -->
+    <string name="login_screen_login">Phone, email or username</string>
+    <string name="login_screen_password">Password</string>
+    <string name="login_screen_login_button">Log in</string>
+
+    <!-- Post age -->
+    <string name="post_age_just_now">Just now</string>
+    <string name="post_age_minutes" formatted="false">%sm</string>
+    <string name="post_age_hours" formatted="false">%sh</string>
+
+    <!-- Errors -->
+    <string name="error_general">Something went wrong</string>
+    <string name="error_empty_tweet">Write a text or attach a picture first</string>
+
+    <!-- Image picker -->
+    <string name="image_picker_title">Pick an image</string>
+
+    <!-- Create tweet screen -->
+    <string name="post_tweet">Tweet</string>
+
+    <!-- Menu -->
+    <string name="menu_logout">Logout</string>
+
+    <!-- Logout dialog -->
+    <string name="logout_dialog_title">Logout</string>
+    <string name="logout_dialog_text">Are you sure you want to log out?</string>
+    <string name="logout_dialog_yes">Yes</string>
+    <string name="logout_dialog_cancel">Cancel</string>
+
+</resources>

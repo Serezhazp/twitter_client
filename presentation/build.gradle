@@ -1,0 +1,38 @@
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+    testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockito_kotlin_version"
+
+    implementation project(':domain')
+    implementation project(':usecases')
+}
+
+//moxy
+dependencies {
+    implementation "com.arello-mobile:moxy-android:$moxy_version"
+    implementation "com.arello-mobile:moxy-app-compat:$moxy_version"
+    kapt "com.arello-mobile:moxy-compiler:$moxy_version"
+}
+
+//dagger (DI)
+dependencies {
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+kapt {
+    arguments {
+        arg("moxyReflectorPackage", "com.serezhazp.twitterclient.presentation")
+    }
+}

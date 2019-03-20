@@ -1,0 +1,88 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def twitter_key = properties.getProperty('twitter_key')
+def twitter_secret = properties.getProperty('twitter_secret')
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.serezhazp.twitterclient"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "CONSUMER_KEY", twitter_key
+        buildConfigField "String", "CONSUMER_SECRET", twitter_secret
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:$androidx_version"
+    implementation 'com.google.android.material:material:1.0.0-beta01'
+    testImplementation 'junit:junit:4.12'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    implementation project(':ui')
+    implementation project(':presentation')
+    implementation project(':framework')
+    implementation project(':domain')
+    implementation project(':usecases')
+    implementation project(':data')
+}
+
+//Image cropper
+dependencies {
+    implementation "com.theartofdev.edmodo:android-image-cropper:$image_cropper"
+}
+
+//Glide
+dependencies {
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+}
+
+//OkHttp
+dependencies {
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+}
+
+//Twitter
+dependencies {
+    implementation "com.twitter.sdk.android:twitter-core:$twitter_version"
+}
+
+//moxy
+dependencies {
+    implementation "com.arello-mobile:moxy-android:$moxy_version"
+    implementation "com.arello-mobile:moxy-app-compat:$moxy_version"
+    kapt "com.arello-mobile:moxy-compiler:$moxy_version"
+}
+
+//dagger (DI)
+dependencies {
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+}
