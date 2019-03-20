@@ -7,6 +7,7 @@ import com.serezhazp.twitterclient.presentation.login.LoginPresenter
 import com.serezhazp.twitterclient.presentation.login.LoginView
 import org.junit.Before
 import org.junit.Test
+import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
@@ -15,6 +16,7 @@ class LoginPresenterTest {
     @Mock
     lateinit var loginView: LoginView
 
+    @InjectMocks
     lateinit var presenter: LoginPresenter
 
     @Before
@@ -25,9 +27,6 @@ class LoginPresenterTest {
     @Test
     fun loginSuccessfulTest() {
 
-        presenter = LoginPresenter()
-        presenter.attachView(loginView)
-
         presenter.twitterLoginSuccessful()
 
         verify(loginView, times(1)).hideProgress()
@@ -36,9 +35,6 @@ class LoginPresenterTest {
 
     @Test
     fun loginFailureTest() {
-
-        presenter = LoginPresenter()
-        presenter.attachView(loginView)
 
         presenter.twitterLoginFail(errorMessage)
 
