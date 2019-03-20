@@ -8,4 +8,4 @@ twitter_secret="your_twitter_secret"
 
 **Unit tests:**
 
-According to some issue in Moxy (MVP library) launching unit tests in a presentation module causes errors, use **tests.sh** (located in a root project directory) script to launch tests instead.
+According to some issue in Moxy (MVP library) presenters tests located inside the **app** module
