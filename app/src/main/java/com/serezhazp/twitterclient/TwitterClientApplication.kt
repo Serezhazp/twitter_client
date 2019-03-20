@@ -14,10 +14,7 @@ import dagger.android.HasServiceInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
-@RegisterMoxyReflectorPackages(
-    "com.serezhazp.twitterclient.presentation",
-    "com.serezhazp.twitterclient.ui"
-)
+@RegisterMoxyReflectorPackages("com.serezhazp.twitterclient.presentation", "com.serezhazp.twitterclient.ui")
 class TwitterClientApplication : Application(), HasActivityInjector, HasSupportFragmentInjector,
     HasServiceInjector {
 
