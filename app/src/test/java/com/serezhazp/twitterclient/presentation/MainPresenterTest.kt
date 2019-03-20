@@ -1,4 +1,4 @@
-package com.serezhazp.twitterclient
+package com.serezhazp.twitterclient.presentation
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.eq
@@ -197,9 +197,16 @@ class MainPresenterTest {
         const val tweetOneText = "tweet_one"
         private const val tweetTwoText = "tweet_two"
         const val errorMessage = "error_message"
-        val twitterUser = TwitterUser(twitterUserName, twitterUserNickName, twitterUserAvatar)
+        val twitterUser = TwitterUser(
+            twitterUserName,
+            twitterUserNickName,
+            twitterUserAvatar
+        )
         private val tweetOne = Tweet(tweetOneText, user = twitterUser)
         private val tweetTwo = Tweet(tweetTwoText, user = twitterUser)
-        val tweetsList = listOf(tweetOne, tweetTwo)
+        val tweetsList = listOf(
+            tweetOne,
+            tweetTwo
+        )
     }
 }

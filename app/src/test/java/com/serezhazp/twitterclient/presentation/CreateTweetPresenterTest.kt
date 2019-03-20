@@ -1,4 +1,4 @@
-package com.serezhazp.twitterclient
+package com.serezhazp.twitterclient.presentation
 
 import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.times
