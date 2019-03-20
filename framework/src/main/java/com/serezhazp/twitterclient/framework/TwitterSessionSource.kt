@@ -1,6 +1,6 @@
 package com.serezhazp.twitterclient.framework
 
-import com.serezhazp.twitterclient.data.SessionDataSource
+import com.serezhazp.twitterclient.data.repositories.SessionDataSource
 import com.twitter.sdk.android.core.TwitterCore
 
 class TwitterSessionSource : SessionDataSource {

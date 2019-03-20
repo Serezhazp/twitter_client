@@ -1,8 +1,8 @@
 package com.serezhazp.twitterclient.usecases
 
-import com.serezhazp.twitterclient.data.SessionRepository
+import com.serezhazp.twitterclient.data.actions.LogoutAction
 
-open class Logout(private val sessionRepository: SessionRepository) {
+open class Logout(private val logoutAction: LogoutAction) {
 
-    operator fun invoke() = sessionRepository.logout()
+    open operator fun invoke() = logoutAction.logout()
 }

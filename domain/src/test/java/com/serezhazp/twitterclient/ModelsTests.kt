@@ -10,19 +10,7 @@ import java.io.File
 
 class ModelsTests {
 
-    companion object {
-        const val tweetText = "tweet_text"
-        const val tweetCreatedAt = "12/05/18"
-        const val twitterUserName = "username"
-        const val twitterUserNickName = "nickname"
-        const val twitterUserAvatar = "avatar.jpg"
-        const val tweetMediaLink = "media_link"
-        const val tweetHashTagOne = "#tag_one"
-        const val tweetHashTagTwo = "#tag_two"
-        val tweetHashTags = listOf(tweetHashTagOne, tweetHashTagTwo)
 
-        val tweetFile = File("")
-    }
 
     @Test
     fun isTwitterUserCorrect() {
@@ -86,5 +74,19 @@ class ModelsTests {
         assertEquals(tweetText, tweetToPost.text)
         assertNull(tweetToPost.file)
         assertEquals("", tweetToPost.media)
+    }
+
+    companion object {
+        const val tweetText = "tweet_text"
+        const val tweetCreatedAt = "12/05/18"
+        const val twitterUserName = "username"
+        const val twitterUserNickName = "nickname"
+        const val twitterUserAvatar = "avatar.jpg"
+        const val tweetMediaLink = "media_link"
+        const val tweetHashTagOne = "#tag_one"
+        const val tweetHashTagTwo = "#tag_two"
+        val tweetHashTags = listOf(tweetHashTagOne, tweetHashTagTwo)
+
+        val tweetFile = File("")
     }
 }

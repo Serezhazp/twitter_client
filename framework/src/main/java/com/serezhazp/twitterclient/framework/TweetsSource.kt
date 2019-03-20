@@ -1,6 +1,6 @@
 package com.serezhazp.twitterclient.framework
 
-import com.serezhazp.twitterclient.data.TweetsDataSource
+import com.serezhazp.twitterclient.data.repositories.TweetsDataSource
 import com.serezhazp.twitterclient.domain.Tweet
 import com.serezhazp.twitterclient.domain.TweetToPost
 import com.serezhazp.twitterclient.domain.TwitterUser

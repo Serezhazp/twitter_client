@@ -1,8 +1,8 @@
 package com.serezhazp.twitterclient.usecases
 
-import com.serezhazp.twitterclient.data.SessionRepository
+import com.serezhazp.twitterclient.data.actions.IsLoggedInAction
 
-class IsLoggedIn(private val sessionRepository: SessionRepository) {
+open class IsLoggedIn(private val isLoggedInAction: IsLoggedInAction) {
 
-    operator fun invoke(): Boolean = sessionRepository.isLoggedIn()
+    open operator fun invoke(): Boolean = isLoggedInAction.isLoggedIn()
 }

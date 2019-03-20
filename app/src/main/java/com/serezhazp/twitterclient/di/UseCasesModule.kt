@@ -1,7 +1,7 @@
 package com.serezhazp.twitterclient.di
 
-import com.serezhazp.twitterclient.data.SessionRepository
-import com.serezhazp.twitterclient.data.TweetsRepository
+import com.serezhazp.twitterclient.data.repositories.SessionRepository
+import com.serezhazp.twitterclient.data.repositories.TweetsRepository
 import com.serezhazp.twitterclient.usecases.GetTweets
 import com.serezhazp.twitterclient.usecases.IsLoggedIn
 import com.serezhazp.twitterclient.usecases.Logout
@@ -26,7 +26,7 @@ class UseCasesModule {
     @Provides
     @Singleton
     fun providePostTweetUseCase(tweetsRepository: TweetsRepository): PostTweet =
-        PostTweet(tweetsRepository)
+        PostTweet(tweetsRepository, tweetsRepository)
 
     @Provides
     @Singleton

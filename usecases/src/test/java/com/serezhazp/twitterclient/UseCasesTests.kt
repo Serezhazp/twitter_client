@@ -1,8 +1,10 @@
 package com.serezhazp.twitterclient
 
-import com.nhaarman.mockito_kotlin.*
-import com.serezhazp.twitterclient.data.SessionRepository
-import com.serezhazp.twitterclient.data.TweetsRepository
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.eq
+import com.nhaarman.mockito_kotlin.times
+import com.nhaarman.mockito_kotlin.verify
+import com.serezhazp.twitterclient.data.actions.*
 import com.serezhazp.twitterclient.domain.Tweet
 import com.serezhazp.twitterclient.domain.TweetToPost
 import com.serezhazp.twitterclient.domain.TwitterUser
@@ -11,10 +13,12 @@ import com.serezhazp.twitterclient.usecases.IsLoggedIn
 import com.serezhazp.twitterclient.usecases.Logout
 import com.serezhazp.twitterclient.usecases.PostTweet
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
 import java.io.File
@@ -25,31 +29,41 @@ open class UseCasesTests {
     var mockitoRule: MockitoRule = MockitoJUnit.rule()
 
     @Mock
-    lateinit var sessionRepository: SessionRepository
+    lateinit var logoutAction: LogoutAction
 
     @Mock
-    lateinit var tweetsRepository: TweetsRepository
+    lateinit var isLoggedInAction: IsLoggedInAction
+
+    @Mock
+    lateinit var getTweetsAction: GetTweetsAction
+
+    @Mock
+    lateinit var postTweetAction: PostTweetAction
+
+    @Mock
+    lateinit var uploadMediaAction: UploadMediaAction
+
+    @Before
+    fun setUp() {
+        MockitoAnnotations.initMocks(this)
+    }
 
     @Test
     fun isLoggedInUseCaseTest() {
 
-        Mockito.`when`(sessionRepository.isLoggedIn()).thenReturn(false)
-
-        val isLoggedInUseCase = IsLoggedIn(sessionRepository)
+        val isLoggedInUseCase = IsLoggedIn(isLoggedInAction)
         isLoggedInUseCase()
 
-        verify(sessionRepository, times(1)).isLoggedIn()
+        verify(isLoggedInAction, times(1)).isLoggedIn()
     }
 
     @Test
     fun logoutUseCaseTest() {
 
-        doNothing().`when`(sessionRepository).logout()
-
-        val logoutUseCase = Logout(sessionRepository)
+        val logoutUseCase = Logout(logoutAction)
         logoutUseCase()
 
-        verify(sessionRepository, times(1)).logout()
+        verify(logoutAction, times(1)).logout()
     }
 
     @Test
@@ -57,7 +71,7 @@ open class UseCasesTests {
 
         val tweetToPost = TweetToPost(tweetOneText)
 
-        Mockito.`when`(tweetsRepository.postTweet(eq(tweetToPost), any())).thenAnswer {
+        Mockito.`when`(postTweetAction.postTweet(eq(tweetToPost), any())).thenAnswer {
             val completion = it.getArgument<((tweet: Tweet?, exception: Throwable?) -> Unit)>(1)
             completion.invoke(
                 Tweet(tweetToPost.text, user = twitterUser),
@@ -65,7 +79,7 @@ open class UseCasesTests {
             )
         }
 
-        val postTweetUseCase = PostTweet(tweetsRepository)
+        val postTweetUseCase = PostTweet(postTweetAction, uploadMediaAction)
         postTweetUseCase(tweetToPost) { tweet, error ->
             assertNull(error)
             assertNotNull(tweet)
@@ -79,7 +93,7 @@ open class UseCasesTests {
         val fileToUpload = File("file")
         val tweetToPost = TweetToPost(tweetOneText, file = fileToUpload)
 
-        Mockito.`when`(tweetsRepository.postTweet(eq(tweetToPost), any())).thenAnswer {
+        Mockito.`when`(postTweetAction.postTweet(eq(tweetToPost), any())).thenAnswer {
             val completion = it.getArgument<((tweet: Tweet?, exception: Throwable?) -> Unit)>(1)
             completion.invoke(
                 Tweet(tweetToPost.text, user = twitterUser),
@@ -87,7 +101,7 @@ open class UseCasesTests {
             )
         }
 
-        val postTweetUseCase = PostTweet(tweetsRepository)
+        val postTweetUseCase = PostTweet(postTweetAction, uploadMediaAction)
         postTweetUseCase(tweetToPost) { tweet, error ->
             assertNull(error)
             assertNotNull(tweet)
@@ -100,7 +114,7 @@ open class UseCasesTests {
 
         val tweetToPost = TweetToPost(tweetOneText)
 
-        Mockito.`when`(tweetsRepository.postTweet(eq(tweetToPost), any())).thenAnswer {
+        Mockito.`when`(postTweetAction.postTweet(eq(tweetToPost), any())).thenAnswer {
             val completion = it.getArgument<((tweet: Tweet?, exception: Throwable?) -> Unit)>(1)
             completion.invoke(
                 null,
@@ -108,7 +122,7 @@ open class UseCasesTests {
             )
         }
 
-        val postTweetUseCase = PostTweet(tweetsRepository)
+        val postTweetUseCase = PostTweet(postTweetAction, uploadMediaAction)
         postTweetUseCase(tweetToPost) { tweet, error ->
             assertNull(tweet)
             assertNotNull(error)
@@ -119,7 +133,7 @@ open class UseCasesTests {
     @Test
     fun getTweetsSuccessUseCaseTest() {
 
-        Mockito.`when`(tweetsRepository.getTweets(any())).thenAnswer {
+        Mockito.`when`(getTweetsAction.getTweets(any())).thenAnswer {
             val completion =
                 it.getArgument<((tweets: List<Tweet>, exception: Throwable?) -> Unit)>(0)
             completion.invoke(
@@ -128,7 +142,7 @@ open class UseCasesTests {
             )
         }
 
-        val getTweetsUseCase = GetTweets(tweetsRepository)
+        val getTweetsUseCase = GetTweets(getTweetsAction)
         getTweetsUseCase { tweets, error ->
             assertNotNull(tweets)
             assertEquals(tweetsList.size, tweets.size)
@@ -141,7 +155,7 @@ open class UseCasesTests {
     @Test
     fun getTweetsFailureUseCaseTest() {
 
-        Mockito.`when`(tweetsRepository.getTweets(any())).thenAnswer {
+        Mockito.`when`(getTweetsAction.getTweets(any())).thenAnswer {
             val completion =
                 it.getArgument<((tweets: List<Tweet>, exception: Throwable?) -> Unit)>(0)
             completion.invoke(
@@ -150,7 +164,7 @@ open class UseCasesTests {
             )
         }
 
-        val getTweetsUseCase = GetTweets(tweetsRepository)
+        val getTweetsUseCase = GetTweets(getTweetsAction)
         getTweetsUseCase { tweets, error ->
             assertNotNull(tweets)
             assertEquals(0, tweets.size)

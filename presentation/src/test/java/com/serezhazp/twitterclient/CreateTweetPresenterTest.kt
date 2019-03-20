@@ -8,6 +8,7 @@ import com.serezhazp.twitterclient.presentation.create_tweet.CreateTweetPresente
 import com.serezhazp.twitterclient.presentation.create_tweet.CreateTweetView
 import org.junit.Before
 import org.junit.Test
+import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
@@ -16,6 +17,7 @@ class CreateTweetPresenterTest {
     @Mock
     lateinit var createTweetView: CreateTweetView
 
+    @InjectMocks
     lateinit var presenter: CreateTweetPresenter
 
     @Before
@@ -26,9 +28,6 @@ class CreateTweetPresenterTest {
     @Test
     fun attachPhotoTest() {
 
-        presenter = CreateTweetPresenter()
-        presenter.attachView(createTweetView)
-
         presenter.attachPhoto()
 
         verify(createTweetView, times(1)).takePhoto()
@@ -36,9 +35,6 @@ class CreateTweetPresenterTest {
 
     @Test
     fun attachImageTest() {
-
-        presenter = CreateTweetPresenter()
-        presenter.attachView(createTweetView)
 
         presenter.attachImage()
 
@@ -48,9 +44,6 @@ class CreateTweetPresenterTest {
     @Test
     fun closeScreenTest() {
 
-        presenter = CreateTweetPresenter()
-        presenter.attachView(createTweetView)
-
         presenter.close()
 
         verify(createTweetView, times(1)).closeScreen()
@@ -58,9 +51,6 @@ class CreateTweetPresenterTest {
 
     @Test
     fun postTweetTextTest() {
-
-        presenter = CreateTweetPresenter()
-        presenter.attachView(createTweetView)
 
         presenter.postTweet(tweetText)
 
@@ -71,9 +61,6 @@ class CreateTweetPresenterTest {
 
     @Test
     fun postTweetEmptyTest() {
-
-        presenter = CreateTweetPresenter()
-        presenter.attachView(createTweetView)
 
         presenter.postTweet("")
 

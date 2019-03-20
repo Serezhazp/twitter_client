@@ -4,10 +4,10 @@ import com.nhaarman.mockito_kotlin.doNothing
 import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
-import com.serezhazp.twitterclient.data.SessionDataSource
-import com.serezhazp.twitterclient.data.SessionRepository
-import com.serezhazp.twitterclient.data.TweetsDataSource
-import com.serezhazp.twitterclient.data.TweetsRepository
+import com.serezhazp.twitterclient.data.repositories.SessionDataSource
+import com.serezhazp.twitterclient.data.repositories.SessionRepository
+import com.serezhazp.twitterclient.data.repositories.TweetsDataSource
+import com.serezhazp.twitterclient.data.repositories.TweetsRepository
 import com.serezhazp.twitterclient.domain.Tweet
 import com.serezhazp.twitterclient.domain.TweetToPost
 import org.junit.Rule
@@ -34,7 +34,8 @@ class RepositoriesTests {
 
         Mockito.`when`(sessionDataSource.isLoggedIn()).thenReturn(true)
 
-        val sessionRepository = SessionRepository(sessionDataSource)
+        val sessionRepository =
+            SessionRepository(sessionDataSource)
         sessionRepository.isLoggedIn()
 
         verify(sessionDataSource, times(1)).isLoggedIn()
@@ -45,7 +46,8 @@ class RepositoriesTests {
 
         doNothing().`when`(sessionDataSource).logout()
 
-        val sessionRepository = SessionRepository(sessionDataSource)
+        val sessionRepository =
+            SessionRepository(sessionDataSource)
         sessionRepository.logout()
 
         verify(sessionDataSource, times(1)).logout()
@@ -60,7 +62,8 @@ class RepositoriesTests {
 
         doNothing().`when`(tweetsDataSource).postTweet(tweetToPost, func)
 
-        val tweetsRepository = TweetsRepository(tweetsDataSource)
+        val tweetsRepository =
+            TweetsRepository(tweetsDataSource)
         tweetsRepository.postTweet(tweetToPost, func)
 
         verify(tweetsDataSource, times(1)).postTweet(tweetToPost, func)
@@ -73,7 +76,8 @@ class RepositoriesTests {
 
         doNothing().`when`(tweetsDataSource).getTweets(eq(func))
 
-        val tweetsRepository = TweetsRepository(tweetsDataSource)
+        val tweetsRepository =
+            TweetsRepository(tweetsDataSource)
         tweetsRepository.getTweets(func)
 
         verify(tweetsDataSource, times(1)).getTweets(func)
@@ -88,7 +92,8 @@ class RepositoriesTests {
 
         doNothing().`when`(tweetsDataSource).uploadMedia(fileToUpload, func)
 
-        val tweetsRepository = TweetsRepository(tweetsDataSource)
+        val tweetsRepository =
+            TweetsRepository(tweetsDataSource)
         tweetsRepository.uploadMedia(fileToUpload, func)
 
         verify(tweetsDataSource, times(1)).uploadMedia(fileToUpload, func)

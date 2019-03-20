@@ -67,6 +67,4 @@ open class MainPresenter @Inject constructor() : MvpPresenter<MainView>() {
             viewState.navigateToLoginScreen()
         }
     }
-
-
 }

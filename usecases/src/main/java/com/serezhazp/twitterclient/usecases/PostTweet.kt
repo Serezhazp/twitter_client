@@ -1,20 +1,21 @@
 package com.serezhazp.twitterclient.usecases
 
-import com.serezhazp.twitterclient.data.TweetsRepository
+import com.serezhazp.twitterclient.data.actions.PostTweetAction
+import com.serezhazp.twitterclient.data.actions.UploadMediaAction
 import com.serezhazp.twitterclient.domain.Tweet
 import com.serezhazp.twitterclient.domain.TweetToPost
 
-class PostTweet(private val tweetsRepository: TweetsRepository) {
+open class PostTweet(private val postTweetAction: PostTweetAction, private var uploadMediaAction: UploadMediaAction) {
 
-    operator fun invoke(tweet: TweetToPost, function: (tweet: Tweet?, error: Throwable?) -> Unit) {
+    open operator fun invoke(tweet: TweetToPost, function: (tweet: Tweet?, error: Throwable?) -> Unit) {
         val file = tweet.file
         if (file != null) {
-            tweetsRepository.uploadMedia(file) { mediaId, error ->
+            uploadMediaAction.uploadMedia(file) { mediaId, error ->
                 if (error != null) {
                     function(null, error)
                 } else {
                     tweet.media = mediaId
-                    tweetsRepository.postTweet(tweet) { tweetResponse, postTweetError ->
+                    postTweetAction.postTweet(tweet) { tweetResponse, postTweetError ->
                         if (postTweetError != null) {
                             function(null, postTweetError)
                         } else {
@@ -24,7 +25,7 @@ class PostTweet(private val tweetsRepository: TweetsRepository) {
                 }
             }
         } else {
-            tweetsRepository.postTweet(tweet) { tweetResponse, error ->
+            postTweetAction.postTweet(tweet) { tweetResponse, error ->
                 if (error != null) {
                     function(null, error)
                 } else {
