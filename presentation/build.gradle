@@ -4,11 +4,10 @@ apply plugin: 'kotlin-kapt'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+}
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation "org.mockito:mockito-core:$mockito_version"
-    testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockito_kotlin_version"
-
+//Own
+dependencies {
     implementation project(':domain')
     implementation project(':usecases')
 }

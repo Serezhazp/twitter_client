@@ -38,10 +38,16 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$androidx_version"
     implementation 'com.google.android.material:material:1.0.0-beta01'
-    testImplementation 'junit:junit:4.12'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+    testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockito_kotlin_version"
+}
+
+//Own
+dependencies {
     implementation project(':ui')
     implementation project(':presentation')
     implementation project(':framework')
