@@ -47,12 +47,14 @@ class FeedAdapter : RecyclerView.Adapter<FeedAdapter.TweetViewHolder>() {
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-        userInfo.setSpan(
-            ForegroundColorSpan(holder.itemView.context.resources.getColor(R.color.twiBlue)),
-            userInfoSource.indexOf(userNickName) - 1,
-            userInfoSource.indexOf(userNickName) + userNickName.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+        if (userInfoSource.indexOf(userNickName) != 0) {
+            userInfo.setSpan(
+                ForegroundColorSpan(holder.itemView.context.resources.getColor(R.color.twiBlue)),
+                userInfoSource.indexOf(userNickName) - 1,
+                userInfoSource.indexOf(userNickName) + userNickName.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
 
         holder.user.text = userInfo
         holder.text.text = tweet.text
